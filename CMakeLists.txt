@@ -7,7 +7,13 @@
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
+
 PROJECT(libzip C)
+add_definitions( "/W3 /D_CRT_SECURE_NO_WARNINGS /wd4005 /wd4996 /wd4477 /wd4267 /wd4244 /wd4101 /nologo" ) 
+
+# Explicitly set the zlib external directory.
+set(ZLIB_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../zlib/include)
+INCLUDE_DIRECTORIES(${ZLIB_INCLUDE_DIR})
 
 INCLUDE(CheckFunctionExists)
 INCLUDE(CheckIncludeFiles)
@@ -143,3 +149,6 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake-zipconf.h.in
   ${CMAKE_CURRENT_BINARY_DIR}/zipconf.h)
 
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/zipconf.h DESTINATION lib/libzip/include)
+
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
